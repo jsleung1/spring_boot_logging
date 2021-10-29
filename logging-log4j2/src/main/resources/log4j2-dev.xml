@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Appenders>
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!-- 
+        <File name="LogToFile" fileName="logs/app-dev.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        -->
+        <RollingFile name="DAILY_LOG" fileName="log/daily.log"
+                 filePattern="log/%d{ddMMyyyy}_daily.log">
+	      <PatternLayout pattern="%d [%7r] %5p - %c - %m%n"/>
+	      <Policies>
+	        <TimeBasedTriggeringPolicy interval="1"/>
+	      </Policies>                               
+		</RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.mkyong" level="debug" additivity="false">
+        	<!-- 
+            <AppenderRef ref="LogToFile"/>
+            -->
+            <AppenderRef ref="DAILY_LOG"/> 
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
+        <Logger name="org.springframework.boot" level="error" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="LogToConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>
